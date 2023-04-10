@@ -6,8 +6,8 @@
     "mikestead.dotenv",
     "csstools.postcss",
     "blanu.vscode-styled-jsx",
-    "msjsdiag.debugger-for-chrome",
     "bradlc.vscode-tailwindcss",
-    "styled-components.vscode-styled-components"
+    "styled-components.vscode-styled-components",
+		"ms-vscode.js-debug"
   ]
 }
