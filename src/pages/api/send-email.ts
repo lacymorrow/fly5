@@ -1,3 +1,4 @@
+// Uses Sengrid to send email
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { sendEmail } from '../../utils/sendEmail';

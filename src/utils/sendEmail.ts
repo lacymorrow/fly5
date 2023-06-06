@@ -17,14 +17,15 @@ const sendEmail = async ({
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+      // Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+      Authorization: `Bearer ${'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'}`,
     },
     body: JSON.stringify({
       personalizations: [
         {
           to: [
             {
-              email: process.env.RECEIVING_EMAIL,
+              email: process.env.RECEIVING_EMAIL || 'lacymorrow0@gmail.com',
             },
           ],
           subject: '👻 Yo from FLY5 ✔',

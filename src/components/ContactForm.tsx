@@ -44,7 +44,7 @@ const ContactForm = () => {
   const postForm = async (event: any) => {
     event.preventDefault();
 
-    const result = await fetch('/api/send-email', {
+    const result = await fetch('/api/send-email-postmark', {
       body: JSON.stringify({
         name: state.name,
         email: state.email,
@@ -72,7 +72,7 @@ const ContactForm = () => {
         });
       });
 
-    if (result.message) {
+    if (result?.message) {
       // Success
       setStatus({
         message: result.message,
@@ -81,7 +81,11 @@ const ContactForm = () => {
     } else {
       // Likely a validation error
       setStatus({
-        message: result.error || result.error?.message || config.errorMessage,
+        message:
+          result?.error ||
+          result?.error?.message ||
+          config?.errorMessage ||
+          'There was an error sending your message. Please email lacymorrow0@gmail.com directly.',
         error: true,
       });
     }
