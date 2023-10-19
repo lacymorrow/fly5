@@ -1,4 +1,6 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, {
+  Html, Head, Main, NextScript,
+} from 'next/document';
 
 import config from '../utils/config';
 

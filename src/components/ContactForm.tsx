@@ -10,7 +10,7 @@ import config from '../utils/config';
 interface StateType {
   name: string;
   email: string;
-  phone: string;
+  tel: string;
   message: string;
 }
 
@@ -26,9 +26,9 @@ const ContactForm = () => {
     {
       name: '',
       email: '',
-      phone: '',
+      tel: '',
       message: '',
-    }
+    },
   );
 
   const handleChange = (event: any) => {
@@ -48,7 +48,7 @@ const ContactForm = () => {
       body: JSON.stringify({
         name: state.name,
         email: state.email,
-        phone: state.phone,
+        tel: state.tel,
         message: state.message,
       }),
       headers: {
@@ -127,10 +127,10 @@ const ContactForm = () => {
         />
       </InputGroup>
       <InputGroup>
-        {/* <label htmlFor="phone">Name</label> */}
+        {/* <label htmlFor="tel">Name</label> */}
         <input
-          id="phone"
-          name="phone"
+          id="tel"
+          name="tel"
           placeholder="Phone"
           type="tel"
           autoComplete="tel"

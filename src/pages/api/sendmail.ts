@@ -4,7 +4,7 @@ import config from '../../utils/config';
 // async..await is not allowed in global scope, must use a wrapper
 const sendMail = async (data: {
   name: string;
-  phone?: string;
+  tel?: string;
   email?: string;
   message: string;
 }) => {
@@ -28,8 +28,8 @@ const sendMail = async (data: {
     from: `"${data.name}" <gojukebox@gmail.com>`, // sender address
     to: process.env.SMTP_USER, // list of receivers
     subject: '👻 Yo from FLY5 ✔', // Subject line
-    text: `Contact from ${data.name}: \r\n${data.phone} \r\n${data.email}\r\n${data.message}`, // plain text body
-    html: `<h1>Yo from FLY5</h1><p>Contact from ${data.name}</p><p>${data.phone} ${data.email}</p><p>${data.message}</p>`, // html body
+    text: `Contact from ${data.name}: \r\n${data.tel} \r\n${data.email}\r\n${data.message}`, // plain text body
+    html: `<h1>Yo from FLY5</h1><p>Contact from ${data.name}</p><p>${data.tel} ${data.email}</p><p>${data.message}</p>`, // html body
   });
 
   return info;
@@ -50,11 +50,11 @@ const handler = (request: any, response: any) => {
     // No name
     return response.status(422).json({ error: 'Please provide your name' });
   }
-  if (!request?.body?.email && !request?.body?.phone) {
+  if (!request?.body?.email && !request?.body?.tel) {
     // No contact info
     return response
       .status(422)
-      .json({ error: 'Please provide an email or phone number' });
+      .json({ error: 'Please provide an email or tel number' });
   }
   if (!request?.body?.message) {
     // No message
@@ -66,7 +66,7 @@ const handler = (request: any, response: any) => {
   sendMail({
     name: request.body.name,
     email: request.body.email,
-    phone: request.body.phone,
+    tel: request.body.tel,
     message: request.body.message,
   })
     .then((info) => {

@@ -5,12 +5,12 @@ const SENDGRID_API = 'https://api.sendgrid.com/v3/mail/send';
 const sendEmail = async ({
   name,
   email,
-  phone,
+  tel,
   message,
 }: {
   name: string;
   email: string;
-  phone: string;
+  tel: string;
   message: string;
 }) => {
   await fetch(SENDGRID_API, {
@@ -32,12 +32,12 @@ const sendEmail = async ({
       ],
       from: {
         email: 'yo@fly5.live',
-        name: `★ FLY5`,
+        name: '★ FLY5',
       },
       content: [
         {
           type: 'text/html',
-          value: `<p><b>${name}</b> just said:</p><p>${message}</p><p>${email}</p><p>${phone}</p>`,
+          value: `<p><b>${name}</b> just said:</p><p>${message}</p><p>${email}</p><p>${tel}</p>`,
         },
       ],
     }),

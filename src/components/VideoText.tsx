@@ -2,6 +2,7 @@ import React, {
   ReactNode,
   Reducer,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
 } from 'react';
@@ -25,8 +26,10 @@ const VideoText = (props: {
   src: string | Array<string>;
 }) => {
   const [width, height] = [720, 385];
-  const { children, text, src, ...rest } = props;
-  const sources = typeof src === 'string' ? [src] : src;
+  const {
+    children, text, src, ...rest
+  } = props;
+  const sources = useMemo(() => (typeof src === 'string' ? [src] : src), [src]);
 
   const videoEl: any = useRef(null);
   const [state, setState] = useReducer<Reducer<StateType, Partial<StateType>>>(
@@ -35,7 +38,7 @@ const VideoText = (props: {
       active: false,
       interactive: false,
       index: 0,
-    }
+    },
   );
 
   const nextVideoIndex = () => incrementNumber(state.index, sources.length);
@@ -72,7 +75,9 @@ const VideoText = (props: {
   const handleCanPlayThrough = () => {};
 
   const handleUpdate = (event: any) => {
-    const { currentTime, duration, ended, error } = event.target;
+    const {
+      currentTime, duration, ended, error,
+    } = event.target;
 
     if (error) {
       console.log('Video error: ', error);
@@ -89,10 +94,19 @@ const VideoText = (props: {
   };
 
   useEffect(() => {
-    if (videoEl.current) {
-      videoEl.current.load(sources[state.index]);
+    const currentVideo = videoEl.current;
+    if (currentVideo) {
+      currentVideo.load(sources[state.index]);
     }
-  }, []);
+    return () => {
+      if (currentVideo) {
+        // Cleanup video https://stackoverflow.com/a/28060352
+        currentVideo.pause();
+        currentVideo.removeAttribute('src'); // empty source
+        currentVideo.load();
+      }
+    };
+  }, [sources, state.index]);
 
   return (
     <StyledWrapper {...rest} width={width} height={height} aria-label={'Fly5'}>
@@ -134,9 +148,9 @@ const VideoText = (props: {
       {prefersReducedMotion() && (
         <small className="text-xs relative z-[1]">
           <a
+            rel="noopener noreferrer"
             href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion#user_preferences"
             target="_blank"
-            rel="noreferrer"
           >
             Your settings indicate that you prefer reduced motion, so we have
             paused this video ↗

@@ -1,35 +1,22 @@
 {
   // Configuration for JavaScript files
-  "extends": ["airbnb-base", "plugin:prettier/recommended", "next"],
-  "plugins": ["@emotion"],
-  "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true
-      }
-    ]
-  },
+  "plugins": ["@emotion", "unused-imports"],
+  "extends": [
+    "airbnb-base",
+    "plugin:@next/next/recommended",
+    "next/core-web-vitals"
+  ],
+  "rules": {},
   "overrides": [
     // Configuration for TypeScript files
     {
       "files": ["**/*.ts", "**/*.tsx"],
-      "plugins": ["@typescript-eslint", "unused-imports"],
-      "extends": [
-        "airbnb-typescript",
-        "next/core-web-vitals",
-        "plugin:prettier/recommended"
-      ],
+      "plugins": ["@typescript-eslint"],
+      "extends": ["airbnb-typescript"],
       "parserOptions": {
         "project": "./tsconfig.json"
       },
       "rules": {
-        "prettier/prettier": [
-          "error",
-          {
-            "singleQuote": true
-          }
-        ],
         "react/destructuring-assignment": "off", // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
         "jsx-a11y/anchor-is-valid": "off", // Next.js use his own internal link system
         "react/require-default-props": "off", // Allow non-defined react props as undefined

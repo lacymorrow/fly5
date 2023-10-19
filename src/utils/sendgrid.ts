@@ -10,7 +10,9 @@ const sendgrid = async (props: {
   message: string;
   [key: string]: any;
 }) => {
-  const { name, email, tel, subject, message, ...rest } = props;
+  const {
+    name, email, tel, subject, message, ...rest
+  } = props;
 
   const body = {
     personalizations: [
@@ -25,7 +27,7 @@ const sendgrid = async (props: {
     ],
     from: {
       email: 'me@lacymorrow.com',
-      name: `Lacy Morrow`,
+      name: 'Lacy Morrow',
     },
     replyTo: {
       email,
@@ -35,13 +37,13 @@ const sendgrid = async (props: {
       {
         type: 'text/html',
         value: `
-					<p>Via <b>${name}</b>:</p>
-					${tel && `<p>${tel}</p>`}
-					${email && `<p>${email}</p>`}
-					${subject && `<p>${subject}</p>`}
-					<p>${message}</p>
-					${rest && `<p>${JSON.stringify(rest)}</p>`}
-				`,
+          <p>Via <b>${name}</b>:</p>
+          ${tel ? `<p>${tel}</p>` : ''}
+          ${email ? `<p>${email}</p>` : ''}
+          ${subject ? `<p>${subject}</p>` : ''}
+          <p>${message}</p>
+          ${Object.keys(rest).length === 0 ? `<p>${JSON.stringify(rest)}</p>` : ''}
+        `,
       },
     ],
   };

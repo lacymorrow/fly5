@@ -12,8 +12,7 @@ const About = (props: {
   imagePath: string;
   imageIndex: number;
   blurData: IGetBlurhashReturn;
-}) => {
-  return (
+}) => (
     <Alt
       meta={
         <Meta
@@ -37,8 +36,7 @@ const About = (props: {
         </div>
       </div>
     </Alt>
-  );
-};
+);
 
 // cannot do this within a component
 export const getStaticProps = async () => {
