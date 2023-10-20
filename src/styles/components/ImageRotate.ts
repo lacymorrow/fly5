@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
 
 export const StyledImageRotate = styled.div<any>`
-  ${(props) =>
-    props.src && {
-      backgroundImage: `url("${props.src}")`,
-    }}
+  ${(props) => props.src && {
+    backgroundImage: `url("${props.src}")`,
+  }}
 
   /* position: relative; */
 	&::after {
@@ -29,11 +28,10 @@ export const StyledImageRotate = styled.div<any>`
   img {
     // Fade in
     opacity: 0;
-    ${(props) =>
-      props.active && {
-        opacity: '1',
-        transition: '0.3s',
-      }}
+    ${(props) => props.active && {
+    opacity: '1',
+    transition: '0.3s',
+  }}
     transition: 1s;
   }
 

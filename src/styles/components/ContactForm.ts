@@ -38,10 +38,9 @@ export const InputGroup = styled.div`
 export const Status = styled.p<any>`
   height: 60px;
   transition: transform 1s ease-in-out;
-  ${(props) =>
-    props.error
-      ? { background: '#ff2400', color: 'white' }
-      : { background: 'white' }};
+  ${(props) => (props.error
+    ? { background: '#ff2400', color: 'white' }
+    : { background: 'white' })};
 
   transform: translateY(${(props) => (props.active ? '0' : '-60px')});
 `;

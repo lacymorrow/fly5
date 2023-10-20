@@ -25,9 +25,8 @@ export const BigTitle = styled.h1<any>`
     position: absolute;
     opacity: 1;
     transition: opacity 2.5s ease-in;
-    ${(props) =>
-      props.active && {
-        opacity: '0.1',
-      }}
+    ${(props) => props.active && {
+    opacity: '0.1',
+  }}
   }
 `;
