@@ -9,7 +9,7 @@ import React, {
 
 import { CornersInIcon, CornersOutIcon } from '@phosphor-icons/react';
 
-import { StyledVideoText, StyledWrapper, FullscreenButton } from '../styles/components/VideoText';
+import { StyledVideoText, StyledWrapper, FullscreenButton, ShimmerLayer, FullscreenLoader } from '../styles/components/VideoText';
 import { incrementNumber, prefersReducedMotion } from '../utils/utils';
 
 interface StateType {
@@ -146,6 +146,7 @@ const VideoText = (props: {
           {text || children}
         </text>
       </svg>
+      <ShimmerLayer isFullscreen={state.isFullscreen} />
       <StyledVideoText
         active={state.active}
         transitionDuration={TRANSITION_DURATION}
@@ -177,6 +178,7 @@ const VideoText = (props: {
           </clipPath>
         </svg>
       </StyledVideoText>
+      {state.isFullscreen && <FullscreenLoader visible={!state.active} />}
       <FullscreenButton
         onClick={toggleFullscreen}
         isFullscreen={state.isFullscreen}

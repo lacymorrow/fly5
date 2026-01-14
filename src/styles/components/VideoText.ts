@@ -105,6 +105,93 @@ export const StyledVideoText = styled.div<{ active: boolean; transitionDuration:
   }
 `;
 
+export const ShimmerLayer = styled.div<{ isFullscreen: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+
+  ${(props) => props.isFullscreen && 'display: none;'}
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(200, 200, 200, 0.3) 0%,
+      rgba(200, 200, 200, 0.5) 20%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(200, 200, 200, 0.5) 80%,
+      rgba(200, 200, 200, 0.3) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    clip-path: url(#svgTextPath);
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+`;
+
+export const FullscreenLoader = styled.div<{ visible: boolean }>`
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10001;
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  pointer-events: none;
+
+  ${(props) => props.visible && 'opacity: 1;'}
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.4) 20%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0.4) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: fullscreenShimmer 1.2s ease-in-out infinite;
+  }
+
+  @keyframes fullscreenShimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+`;
+
 export const FullscreenButton = styled.button<{ isFullscreen: boolean }>`
   position: absolute;
   bottom: 12px;
