@@ -1,28 +1,34 @@
 import styled from '@emotion/styled';
 
-export const StyledWrapper = styled.div<any>`
+export const StyledWrapper = styled.div<{ height: number; isFullscreen: boolean }>`
   width: 100%;
   height: 100%;
   min-height: ${(props) => props.height}px;
   overflow: hidden;
   position: relative;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Fullscreen backdrop */
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-out;
+  }
 
   ${(props) => props.isFullscreen && `
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     z-index: 9999;
-    background: #000;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+    &::before {
+      opacity: 1;
+      z-index: 9998;
+    }
   `}
 
-  svg {
+  & > svg {
     position: absolute;
     top: 0;
     width: 100%;
@@ -47,7 +53,7 @@ export const StyledWrapper = styled.div<any>`
   }
 `;
 
-export const StyledBackgroundText = styled.div<any>`
+export const StyledBackgroundText = styled.div`
   color: rgb(26, 32, 44);
   font-weight: 900;
   font-size: 18rem;
@@ -55,7 +61,7 @@ export const StyledBackgroundText = styled.div<any>`
   text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
 `;
 
-export const StyledVideoText = styled.div<any>`
+export const StyledVideoText = styled.div<{ active: boolean; transitionDuration: number; isFullscreen: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -70,9 +76,9 @@ export const StyledVideoText = styled.div<any>`
   transition: opacity ${(props) => props.transitionDuration}s ease-in-out;
 
   ${(props) => props.isFullscreen && `
-    position: relative;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,11 +88,13 @@ export const StyledVideoText = styled.div<any>`
     display: block;
     margin: 0 auto;
     user-select: none;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     ${(props) => props.isFullscreen && `
-      width: 100%;
-      height: auto;
+      max-width: 100vw;
       max-height: 100vh;
+      width: auto;
+      height: auto;
       object-fit: contain;
     `}
   }
@@ -97,7 +105,7 @@ export const StyledVideoText = styled.div<any>`
   }
 `;
 
-export const FullscreenButton = styled.button<any>`
+export const FullscreenButton = styled.button<{ isFullscreen: boolean }>`
   position: absolute;
   bottom: 12px;
   right: 12px;
@@ -106,13 +114,16 @@ export const FullscreenButton = styled.button<any>`
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border: none;
-  border-radius: 6px;
-  padding: 10px;
+  border-radius: 3px;
+  padding: 8px 12px;
   cursor: pointer;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
 
@@ -152,13 +163,13 @@ export const FullscreenButton = styled.button<any>`
     position: fixed;
     bottom: 24px;
     right: 24px;
-    opacity: 0.6;
-    background: rgba(255, 255, 255, 0.15);
+    opacity: 0.8;
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    
+
     &:hover {
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(0, 0, 0, 0.8);
       opacity: 1;
     }
   `}

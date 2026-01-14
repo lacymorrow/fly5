@@ -7,6 +7,8 @@ import React, {
   useRef,
 } from 'react';
 
+import { CornersInIcon, CornersOutIcon } from '@phosphor-icons/react';
+
 import { StyledVideoText, StyledWrapper, FullscreenButton } from '../styles/components/VideoText';
 import { incrementNumber, prefersReducedMotion } from '../utils/utils';
 
@@ -17,7 +19,7 @@ interface StateType {
   isFullscreen: boolean;
 }
 
-const TRANSITION_DURATION = 2; // seconds
+const TRANSITION_DURATION = 1; // seconds
 
 // 515/960
 const VideoText = (props: {
@@ -117,28 +119,28 @@ const VideoText = (props: {
 
   // Handle Escape key to exit fullscreen
   useEffect(() => {
+    if (!state.isFullscreen) {
+      return undefined;
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && state.isFullscreen) {
+      if (e.key === 'Escape') {
         setState({ isFullscreen: false });
       }
     };
 
-    if (state.isFullscreen) {
-      document.addEventListener('keydown', handleKeyDown);
-      // Prevent body scroll when fullscreen
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      document.body.style.overflow = originalOverflow;
       document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
     };
   }, [state.isFullscreen]);
 
   return (
-    <StyledWrapper {...rest} width={width} height={height} aria-label={'Fly5'} isFullscreen={state.isFullscreen}>
+    <StyledWrapper {...rest} height={height} aria-label={'Fly5'} isFullscreen={state.isFullscreen}>
       <svg width={width} height={height}>
         <text x="50%" y="50%" className="text-shadow">
           {text || children}
@@ -181,19 +183,15 @@ const VideoText = (props: {
         title={state.isFullscreen ? 'Exit fullscreen' : 'View full video'}
       >
         {state.isFullscreen ? (
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="4 14 10 14 10 20"></polyline>
-            <polyline points="20 10 14 10 14 4"></polyline>
-            <line x1="14" y1="10" x2="21" y2="3"></line>
-            <line x1="3" y1="21" x2="10" y2="14"></line>
-          </svg>
+          <>
+            <span>Exit Fullscreen</span>
+            <CornersInIcon size={24} />
+          </>
         ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 3 21 3 21 9"></polyline>
-            <polyline points="9 21 3 21 3 15"></polyline>
-            <line x1="21" y1="3" x2="14" y2="10"></line>
-            <line x1="3" y1="21" x2="10" y2="14"></line>
-          </svg>
+          <>
+            <span>Fullscreen</span>
+            <CornersOutIcon size={24} />
+          </>
         )}
       </FullscreenButton>
       {prefersReducedMotion() && (
