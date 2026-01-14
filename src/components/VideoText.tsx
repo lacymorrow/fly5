@@ -7,16 +7,19 @@ import React, {
   useRef,
 } from 'react';
 
-import { StyledVideoText, StyledWrapper } from '../styles/components/VideoText';
+import { CornersInIcon, CornersOutIcon } from '@phosphor-icons/react';
+
+import { StyledVideoText, StyledWrapper, FullscreenButton, ShimmerLayer, FullscreenLoader } from '../styles/components/VideoText';
 import { incrementNumber, prefersReducedMotion } from '../utils/utils';
 
 interface StateType {
   active: boolean;
   interactive: boolean;
   index: number;
+  isFullscreen: boolean;
 }
 
-const TRANSITION_DURATION = 2; // seconds
+const TRANSITION_DURATION = 1; // seconds
 
 // 515/960
 const VideoText = (props: {
@@ -38,8 +41,14 @@ const VideoText = (props: {
       active: false,
       interactive: false,
       index: 0,
+      isFullscreen: false,
     },
   );
+
+  const toggleFullscreen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setState({ isFullscreen: !state.isFullscreen });
+  };
 
   const nextVideoIndex = () => incrementNumber(state.index, sources.length);
 
@@ -108,26 +117,50 @@ const VideoText = (props: {
     };
   }, [sources, state.index]);
 
+  // Handle Escape key to exit fullscreen
+  useEffect(() => {
+    if (!state.isFullscreen) {
+      return undefined;
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setState({ isFullscreen: false });
+      }
+    };
+
+    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [state.isFullscreen]);
+
   return (
-    <StyledWrapper {...rest} width={width} height={height} aria-label={'Fly5'}>
+    <StyledWrapper {...rest} height={height} aria-label={'Fly5'} isFullscreen={state.isFullscreen}>
       <svg width={width} height={height}>
         <text x="50%" y="50%" className="text-shadow">
           {text || children}
         </text>
       </svg>
+      <ShimmerLayer isFullscreen={state.isFullscreen} />
       <StyledVideoText
         active={state.active}
         transitionDuration={TRANSITION_DURATION}
         onClick={nextVideo}
+        isFullscreen={state.isFullscreen}
       >
         <video
           ref={videoEl}
           muted
           // crossOrigin=''
           preload="auto"
-          width={width}
-          height={height}
-          className="svg-clipped-text"
+          width={state.isFullscreen ? undefined : width}
+          height={state.isFullscreen ? undefined : height}
+          className={state.isFullscreen ? '' : 'svg-clipped-text'}
           key={state.index}
           onTimeUpdate={handleUpdate}
           onCanPlay={handleCanPlay}
@@ -145,6 +178,24 @@ const VideoText = (props: {
           </clipPath>
         </svg>
       </StyledVideoText>
+      {state.isFullscreen && <FullscreenLoader visible={!state.active} />}
+      <FullscreenButton
+        onClick={toggleFullscreen}
+        isFullscreen={state.isFullscreen}
+        title={state.isFullscreen ? 'Exit fullscreen' : 'View full video'}
+      >
+        {state.isFullscreen ? (
+          <>
+            <span>Exit Fullscreen</span>
+            <CornersInIcon size={24} />
+          </>
+        ) : (
+          <>
+            <span>Fullscreen</span>
+            <CornersOutIcon size={24} />
+          </>
+        )}
+      </FullscreenButton>
       {prefersReducedMotion() && (
         <small className="text-xs relative z-[1]">
           <a
