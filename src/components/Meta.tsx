@@ -12,6 +12,7 @@ interface MetaProps {
 
 const Meta = (props: MetaProps) => {
   const router = useRouter();
+  const canonical = props.canonical || `${config.siteUrl}${router.asPath}`;
 
   return (
     <>
@@ -50,13 +51,14 @@ const Meta = (props: MetaProps) => {
       <NextSeo
         title={props.title}
         description={props.description}
-        canonical={props.canonical}
+        canonical={canonical}
         openGraph={{
           title: props.title,
           description: props.description,
-          url: props.canonical,
+          url: canonical,
           locale: config.locale,
           site_name: config.site_name,
+          type: 'website',
         }}
       />
     </>
