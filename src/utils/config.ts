@@ -1,7 +1,7 @@
 const config = {
   totalImages: 21,
   site_name: 'FLY5',
-  siteUrl: 'https://fly5.live',
+  siteUrl: 'https://www.fly5.live',
   email: 'me@lacymorrow.com',
   title: 'FLY5',
   tagline: 'Aerial Cinematography',
