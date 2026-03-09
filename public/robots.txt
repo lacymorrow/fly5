@@ -1,4 +1,4 @@
 User-agent: *
-Allow: /
+Disallow:
 
 Sitemap: https://www.fly5.live/sitemap.xml
