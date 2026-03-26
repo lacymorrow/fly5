@@ -35,6 +35,11 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script
+            defer
+            src="https://analytics.lacy.sh/script.js"
+            data-website-id="84163419-6472-49de-8cbc-33c5e1f206dd"
+          />
         </body>
       </Html>
     );
