@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import Head from 'next/head';
 import Link from 'next/link';
-import Script from 'next/script';
 
 import { Meta } from '../components/Meta';
 import VideoText from '../components/VideoText';
@@ -55,28 +55,26 @@ const Index = () => {
   return (
     <div className="antialiased w-full min-h-screen px-1 py-16 text-center flex items-center flex-col">
       <Meta
-        title="FLY5 — Professional Aerial Cinematography Studio in Charlotte, NC"
-        description="FLY5 is a professional aerial cinematography studio based in Charlotte, NC. We capture stunning drone footage for film, real estate, events, and commercial productions."
+        title="FLY5 — Aerial Cinematography Studio | Charlotte, NC"
+        description="FLY5 is an aerial cinematography studio in Charlotte, NC. Professional drone footage for film, real estate, events, and commercial productions."
         ogImage={config.ogImage}
       />
-      <Script
-        id="org-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <Script
-        id="video-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
-      />
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
+        />
+      </Head>
 
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:p-2">
         Skip to main content
       </a>
 
       <main id="main-content" role="main">
-        <h1 className="sr-only">FLY5 — Aerial Cinematography with Impact</h1>
-
         <TextWrapper className="hidden md:block">
           <VideoText
             text={config.title}
@@ -108,7 +106,7 @@ const Index = () => {
           </span>
         </p>
 
-        <p className="max-w-xl mx-auto text-lg text-gray-700 mb-12 px-4">
+        <p className="max-w-xl mx-auto text-lg text-gray-700 mb-8 px-4">
           We specialize in cinematic drone footage for film, real estate, events, and commercial projects across the Charlotte, NC area. From breathtaking aerials to precision close-ups, FLY5 delivers footage that elevates your story.
         </p>
 
@@ -117,7 +115,35 @@ const Index = () => {
             Interested?
           </a>
         </Link>
+
+        <section className="max-w-2xl mx-auto mt-16 px-4 text-left">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Professional Aerial Cinematography Services</h2>
+          <p className="text-lg text-gray-700 mb-4">
+            FLY5 brings a cinematic eye to every aerial production. Our team of licensed drone pilots and cinematographers work with the latest equipment to capture footage that transforms how your audience sees your project.
+          </p>
+          <p className="text-lg text-gray-700 mb-4">
+            Whether you are producing a film, showcasing a property, documenting a construction site, or capturing a special event, our aerial perspectives add a dimension that ground-based cameras simply cannot achieve.
+          </p>
+          <p className="text-lg text-gray-700 mb-4">
+            Based in Charlotte, North Carolina, we serve clients throughout the Southeast and beyond. Every project receives our full creative attention, from pre-production planning through final delivery.
+          </p>
+        </section>
       </main>
+
+      <footer className="mt-16 py-8 text-center text-sm text-gray-500">
+        <p>&copy; {new Date().getFullYear()} {config.title}. All rights reserved.</p>
+        <nav aria-label="Footer navigation" className="mt-2">
+          <Link href="/about/">
+            <a className="text-gray-500 hover:text-gray-900 mx-2">About</a>
+          </Link>
+          <Link href="/contact/">
+            <a className="text-gray-500 hover:text-gray-900 mx-2">Contact</a>
+          </Link>
+          <Link href="/privacy/">
+            <a className="text-gray-500 hover:text-gray-900 mx-2">Privacy Policy</a>
+          </Link>
+        </nav>
+      </footer>
     </div>
   );
 };
