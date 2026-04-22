@@ -10,6 +10,7 @@ class MyDocument extends Document {
     return (
       <Html lang={config.locale}>
         <Head>
+          <meta charSet="UTF-8" />
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
             <>

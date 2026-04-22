@@ -6,7 +6,8 @@ const config = {
   title: 'FLY5',
   tagline: 'Aerial Cinematography',
   description:
-    'Aerial cinematography studio based in Charlotte, NC. Capturing reality from a new vantage point.',
+    'FLY5 is a professional aerial cinematography studio based in Charlotte, NC. We capture stunning drone footage for film, real estate, events, and commercial productions.',
+  ogImage: '/assets/images/shots/4.jpg',
   locale: 'en',
   errorMessage: '',
 };

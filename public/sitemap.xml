@@ -14,8 +14,14 @@
   </url>
   <url>
     <loc>https://www.fly5.live/contact/</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-04-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.fly5.live/privacy/</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

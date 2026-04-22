@@ -14,6 +14,7 @@ interface ImageRotateProps {
   total: number;
   staticInitialIndex: number;
   staticBlurData: IGetBlurhashReturn;
+  alt?: string;
 }
 
 const ImageRotate = (props: ImageRotateProps) => {
@@ -61,7 +62,7 @@ const ImageRotate = (props: ImageRotateProps) => {
         />
       )}
       <Image
-        alt=""
+        alt={props.alt || 'Aerial drone photography by FLY5'}
         src={imageState.image}
         priority={true}
         sizes="50vw"

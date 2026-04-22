@@ -8,6 +8,7 @@ interface MetaProps {
   title: string;
   description: string;
   canonical?: string;
+  ogImage?: string;
 }
 
 const Meta = (props: MetaProps) => {
@@ -59,6 +60,16 @@ const Meta = (props: MetaProps) => {
           locale: config.locale,
           site_name: config.site_name,
           type: 'website',
+          images: props.ogImage
+            ? [
+              {
+                url: `${config.siteUrl}${props.ogImage}`,
+                width: 1200,
+                height: 630,
+                alt: props.title,
+              },
+            ]
+            : undefined,
         }}
       />
     </>

@@ -13,15 +13,19 @@ const Main = (props: MainProps) => (
   <div className="flex flex-col w-full min-h-screen">
     {props.meta}
 
+    <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:p-2">
+      Skip to main content
+    </a>
+
     <div className="max-w-screen-md w-full mx-auto">
-      <div className="border-b border-gray-300">
+      <header className="border-b border-gray-300">
         <div className="pt-16 pb-8">
           <div className="font-extrabold text-6xl text-gray-900">
             {config.title}
           </div>
           <div className="text-xl uppercase">{config.tagline}</div>
         </div>
-        <div>
+        <nav aria-label="Main navigation">
           <ul className="flex flex-wrap text-xl">
             <li className="mr-6">
               <Link href="/">
@@ -29,24 +33,31 @@ const Main = (props: MainProps) => (
               </Link>
             </li>
             <li className="mr-6">
-              <Link href="/about">
+              <Link href="/about/">
                 <a>About</a>
               </Link>
             </li>
             <li className="mr-6">
-              <Link href="/contact">
+              <Link href="/contact/">
                 <a>Contact</a>
               </Link>
             </li>
           </ul>
-        </div>
-      </div>
+        </nav>
+      </header>
 
-      <div className="py-5 text-xl content">{props.children}</div>
+      <main id="main-content" role="main" className="py-5 text-xl content">
+        {props.children}
+      </main>
 
-      {/* <div className="border-t border-gray-300 text-center py-8 text-sm">
-        © Copyright {new Date().getFullYear()} {config.title}
-      </div> */}
+      <footer className="border-t border-gray-300 text-center py-8 text-sm">
+        <p>&copy; {new Date().getFullYear()} {config.title}. All rights reserved.</p>
+        <nav aria-label="Footer navigation" className="mt-2">
+          <Link href="/privacy/">
+            <a className="text-gray-600 hover:text-gray-900">Privacy Policy</a>
+          </Link>
+        </nav>
+      </footer>
     </div>
   </div>
 );

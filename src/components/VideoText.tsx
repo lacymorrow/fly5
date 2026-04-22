@@ -27,6 +27,7 @@ const VideoText = (props: {
   className?: string;
   text?: string;
   src: string | Array<string>;
+  poster?: string;
 }) => {
   const [width, height] = [720, 385];
   const {
@@ -156,8 +157,8 @@ const VideoText = (props: {
         <video
           ref={videoEl}
           muted
-          // crossOrigin=''
           preload="auto"
+          poster={props.poster}
           width={state.isFullscreen ? undefined : width}
           height={state.isFullscreen ? undefined : height}
           className={state.isFullscreen ? '' : 'svg-clipped-text'}
@@ -167,6 +168,7 @@ const VideoText = (props: {
           onCanPlayThrough={handleCanPlayThrough}
         >
           <source src={`${sources[state.index]}`} type="video/mp4" />
+          <track kind="captions" label="English" srcLang="en" default />
           Your browser does not support this video file.
         </video>
 

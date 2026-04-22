@@ -104,47 +104,51 @@ const ContactForm = () => {
         }}
       />
       <InputGroup>
-        {/* <label htmlFor="name">Name</label> */}
+        <label htmlFor="name" className="sr-only">Name</label>
         <input
           type="text"
           id="name"
           name="name"
           placeholder="Name"
           autoComplete="name"
+          aria-label="Your name"
           onChange={handleChange}
           required
         />
       </InputGroup>
       <InputGroup>
-        {/* <label htmlFor="email">Email</label> */}
+        <label htmlFor="email" className="sr-only">Email</label>
         <input
           id="email"
           name="email"
           placeholder="Email"
           type="email"
           autoComplete="email"
+          aria-label="Your email address"
           onChange={handleChange}
         />
       </InputGroup>
       <InputGroup>
-        {/* <label htmlFor="tel">Name</label> */}
+        <label htmlFor="tel" className="sr-only">Phone</label>
         <input
           id="tel"
           name="tel"
           placeholder="Phone"
           type="tel"
           autoComplete="tel"
+          aria-label="Your phone number"
           onChange={handleChange}
         />
       </InputGroup>
       <InputGroup>
-        {/* <label htmlFor="message">Tell us what&apos;s up</label> */}
+        <label htmlFor="message" className="sr-only">Message</label>
         <textarea
           id="message"
           name="message"
           placeholder="Tell us what's up"
           rows={4}
           className="w-full"
+          aria-label="Your message"
           onChange={handleChange}
         />
       </InputGroup>
