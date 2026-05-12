@@ -8,9 +8,7 @@ import FeaturedProject from '../components/FeaturedProject';
 import { Meta } from '../components/Meta';
 import ProjectCard from '../components/ProjectCard';
 import ProjectLightbox from '../components/ProjectLightbox';
-import VideoText from '../components/VideoText';
 import { Project, ProjectCategory, projects } from '../data/projects';
-import { TextWrapper } from '../styles';
 import config from '../utils/config';
 
 const Portfolio = () => {
@@ -92,23 +90,8 @@ const Portfolio = () => {
           <div className="absolute inset-0 bg-black bg-opacity-50" />
         </div>
 
-        <div className="relative z-10 text-center">
-          <div className="hidden md:flex justify-center mb-4">
-            <TextWrapper>
-              <VideoText
-                text="OUR WORK"
-                poster="/assets/images/shots/4.jpg"
-                src={[
-                  '/assets/videos/3.mp4',
-                  '/assets/videos/0.mp4',
-                  '/assets/videos/1.mp4',
-                  '/assets/videos/2.mp4',
-                  '/assets/videos/4.mp4',
-                ]}
-              />
-            </TextWrapper>
-          </div>
-          <h1 className="md:hidden text-7xl sm:text-8xl font-extrabold text-white mb-4">
+        <div className="relative z-10 text-center px-4">
+          <h1 className="text-7xl sm:text-8xl md:text-9xl font-extrabold text-white mb-4 tracking-tight">
             OUR WORK
           </h1>
           <p className="text-lg text-gray-400 uppercase tracking-widest">
