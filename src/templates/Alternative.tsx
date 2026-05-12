@@ -31,6 +31,9 @@ const Alt = (props: AltProps) => (
           <Link href="/">
             <a className="text-white transition px-4">Home</a>
           </Link>
+          <Link href="/portfolio/">
+            <a className="text-white transition px-4">Portfolio</a>
+          </Link>
           <Link href="/about/">
             <a className="text-white transition px-4">About</a>
           </Link>

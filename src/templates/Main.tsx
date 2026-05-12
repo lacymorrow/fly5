@@ -33,6 +33,11 @@ const Main = (props: MainProps) => (
               </Link>
             </li>
             <li className="mr-6">
+              <Link href="/portfolio/">
+                <a>Portfolio</a>
+              </Link>
+            </li>
+            <li className="mr-6">
               <Link href="/about/">
                 <a>About</a>
               </Link>

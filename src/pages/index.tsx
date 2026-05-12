@@ -133,6 +133,9 @@ const Index = () => {
       <footer className="mt-16 py-8 text-center text-sm text-gray-500">
         <p>&copy; {new Date().getFullYear()} {config.title}. All rights reserved.</p>
         <nav aria-label="Footer navigation" className="mt-2">
+          <Link href="/portfolio/">
+            <a className="text-gray-500 hover:text-gray-900 mx-2">Portfolio</a>
+          </Link>
           <Link href="/about/">
             <a className="text-gray-500 hover:text-gray-900 mx-2">About</a>
           </Link>
