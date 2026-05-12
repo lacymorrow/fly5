@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -17,6 +17,8 @@ const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory | 'all'>('all');
   const [lightboxProject, setLightboxProject] = useState<Project | null>(null);
 
+  const handleCloseLightbox = useCallback(() => setLightboxProject(null), []);
+
   const filtered = activeCategory === 'all'
     ? projects
     : projects.filter((p) => p.category === activeCategory);
@@ -28,13 +30,17 @@ const Portfolio = () => {
   let featuredIdx = 0;
   nonFeatured.forEach((project, i) => {
     gridItems.push(project);
-    if ((i + 1) % 4 === 0 && featuredIdx < featured.length) {
-      gridItems.push({ type: 'featured', project: featured[featuredIdx]! });
+    const feat = featured[featuredIdx];
+    if ((i + 1) % 4 === 0 && feat) {
+      gridItems.push({ type: 'featured', project: feat });
       featuredIdx += 1;
     }
   });
   while (featuredIdx < featured.length) {
-    gridItems.push({ type: 'featured', project: featured[featuredIdx]! });
+    const feat = featured[featuredIdx];
+    if (feat) {
+      gridItems.push({ type: 'featured', project: feat });
+    }
     featuredIdx += 1;
   }
 
@@ -77,6 +83,7 @@ const Portfolio = () => {
             muted
             loop
             playsInline
+            preload="metadata"
             className="w-full h-full object-cover"
             poster="/assets/images/shots/4.jpg"
           >
@@ -109,7 +116,7 @@ const Portfolio = () => {
           </p>
         </div>
 
-        <div className="absolute bottom-8 z-10 animate-bounce">
+        <div className="absolute bottom-8 z-10 animate-bounce" aria-hidden="true">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
             <path d="M12 5v14M5 12l7 7 7-7" />
           </svg>
@@ -120,35 +127,35 @@ const Portfolio = () => {
       <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
 
       {/* Grid */}
-      <main id="portfolio-grid" role="main" className="pb-16">
-        {gridItems.map((item) => {
-          if ('type' in item && item.type === 'featured') {
+      <main id="portfolio-grid" className="pb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2">
+          {gridItems.map((item) => {
+            if ('type' in item && item.type === 'featured') {
+              return (
+                <div key={`featured-${item.project.id}`} className="col-span-1 sm:col-span-2">
+                  <FeaturedProject
+                    project={item.project}
+                    onClick={() => setLightboxProject(item.project)}
+                  />
+                </div>
+              );
+            }
+
+            const project = item as Project;
+            const idx = nonFeatured.indexOf(project);
+            const tall = idx % 3 === 0;
+
             return (
-              <FeaturedProject
-                key={`featured-${item.project.id}`}
-                project={item.project}
-                onClick={() => setLightboxProject(item.project)}
-              />
+              <div key={project.id}>
+                <ProjectCard
+                  project={project}
+                  onClick={() => setLightboxProject(project)}
+                  tall={tall}
+                />
+              </div>
             );
-          }
-
-          const project = item as Project;
-          const idx = nonFeatured.indexOf(project);
-          const tall = idx % 3 === 0;
-
-          return (
-            <div
-              key={project.id}
-              className={`inline-block w-full sm:w-1/2 align-top ${idx % 2 === 0 ? '' : ''}`}
-            >
-              <ProjectCard
-                project={project}
-                onClick={() => setLightboxProject(project)}
-                tall={tall}
-              />
-            </div>
-          );
-        })}
+          })}
+        </div>
 
         {filtered.length === 0 && (
           <p className="text-center text-gray-500 py-24 text-lg">
@@ -192,7 +199,7 @@ const Portfolio = () => {
       {lightboxProject && (
         <ProjectLightbox
           project={lightboxProject}
-          onClose={() => setLightboxProject(null)}
+          onClose={handleCloseLightbox}
         />
       )}
     </div>
