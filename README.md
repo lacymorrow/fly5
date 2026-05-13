@@ -10,7 +10,19 @@
 
 ---
 
+<p align="center">
+  <img src=".github/screenshots/homepage-viewport.png" alt="FLY5 homepage — aerial cinematography with impact" width="700" />
+</p>
+
 FPV freestyle and aerial cinematography team. Professional drone video production for events, real estate, action sports, and creative projects.
+
+## Screenshots
+
+<p align="center">
+  <img src=".github/screenshots/about.png" alt="About FLY5 page" width="45%" />
+  &nbsp;&nbsp;
+  <img src=".github/screenshots/contact.png" alt="Contact FLY5 page" width="45%" />
+</p>
 
 ## Development
 
