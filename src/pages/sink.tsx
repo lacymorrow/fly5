@@ -1,13 +1,10 @@
-import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import { Meta } from '../components/Meta';
 import { Main } from '../templates/Main';
 import config from '../utils/config';
 
-const Index = () => {
-  const router = useRouter();
-
-  return (
+const Index = () => (
     <Main
       meta={
         <Meta
@@ -17,9 +14,12 @@ const Index = () => {
       }
     >
       <a href="https://github.com/ixartz/Next-js-Boilerplate">
-        <img
-          src={`${router.basePath}/assets/images/nextjs-starter-banner.png`}
+        <Image
+          src="/assets/images/nextjs-starter-banner.webp"
           alt="Nextjs starter banner"
+          width={1200}
+          height={630}
+          layout="responsive"
         />
       </a>
       <h1 className="font-bold text-2xl">
@@ -181,7 +181,6 @@ const Index = () => {
         on our website to support this project.
       </p>
     </Main>
-  );
-};
+);
 
 export default Index;
