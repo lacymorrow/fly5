@@ -1,28 +1,59 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import sendgrid from '../../utils/sendgrid';
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  if (!process.env.SENDGRID_API_KEY) {
+  if (!process.env.RESEND_API_KEY) {
     return res.status(503).json({ message: 'Email service is not configured.' });
   }
 
-  try {
-    const result = await sendgrid(req.body);
+  const { name, email, tel, message } = req.body;
 
-    if (result?.statusText === 'Accepted') {
-      return res.status(200).json({
-        ok: true,
-        message: 'Your message was sent, thanks for reaching out  🚀',
-      });
+  if (!name) {
+    return res.status(422).json({ error: 'Please provide your name' });
+  }
+  if (!email && !tel) {
+    return res.status(422).json({ error: 'Please provide an email or phone number' });
+  }
+  if (!message) {
+    return res.status(422).json({ error: 'Tell us something, like "I want to know more"' });
+  }
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: 'FLY5 <onboarding@resend.dev>',
+        to: process.env.RECEIVING_EMAIL || 'gojukebox@gmail.com',
+        reply_to: email || undefined,
+        subject: `[FLY5] New message from ${name}`,
+        html: `
+          <h2>New contact from FLY5</h2>
+          <p><b>Name:</b> ${name}</p>
+          ${email ? `<p><b>Email:</b> ${email}</p>` : ''}
+          ${tel ? `<p><b>Phone:</b> ${tel}</p>` : ''}
+          <p><b>Message:</b></p>
+          <p>${message}</p>
+        `,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('[send-email]', error);
+      return res.status(500).json({ message: 'Message failed to send.' });
     }
 
-    return res.status(502).json({ message: 'Message failed to send.' });
-  } catch (error: any) {
+    return res.status(200).json({
+      message: 'Your message was sent, thanks for reaching out!',
+    });
+  } catch (error) {
     console.error('[send-email]', error);
     return res.status(500).json({ message: 'Message failed to send.' });
   }
