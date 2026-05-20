@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         ],
         from: {
-          email: 'yo@fly5.live',
+          email: 'me@lacymorrow.com',
           name: 'FLY5',
         },
         reply_to: email ? { email, name } : undefined,
@@ -66,7 +66,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const errorBody = await response.text();
     console.error('[send-email] SendGrid error:', response.status, errorBody);
-    return res.status(500).json({ message: 'Message failed to send.' });
+    return res.status(500).json({ message: 'Message failed to send.', _debug: { status: response.status, body: errorBody } });
   } catch (error) {
     console.error('[send-email]', error);
     return res.status(500).json({ message: 'Message failed to send.' });
