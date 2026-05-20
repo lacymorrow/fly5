@@ -41,44 +41,39 @@ const sendMail = async (data: {
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 };
 
-const handler = (request: any, response: any) => {
-  // console.log('[sendmail] Received request: ', request);
+const handler = async (request: any, response: any) => {
   if (!process.env.SMTP_PASS) {
-    return response.status(500).json({ error: config.errorMessage });
+    return response.status(503).json({ error: config.errorMessage });
   }
   if (!request?.body?.name) {
-    // No name
     return response.status(422).json({ error: 'Please provide your name' });
   }
   if (!request?.body?.email && !request?.body?.tel) {
-    // No contact info
     return response
       .status(422)
       .json({ error: 'Please provide an email or tel number' });
   }
   if (!request?.body?.message) {
-    // No message
     return response
       .status(422)
       .json({ error: 'Tell us something, like "I want to know more"' });
   }
 
-  sendMail({
-    name: request.body.name,
-    email: request.body.email,
-    tel: request.body.tel,
-    message: request.body.message,
-  })
-    .then((info) => {
-      console.log('[sendmail] Message sent: %s', info.messageId);
-    })
-    .catch((error) => {
-      console.error('[sendmail] Sending failed: %s', error);
-      return response.status(500).json({ error: config.errorMessage });
+  try {
+    const info = await sendMail({
+      name: request.body.name,
+      email: request.body.email,
+      tel: request.body.tel,
+      message: request.body.message,
     });
-  return response
-    .status(200)
-    .json({ success: 'Your message was sent, thanks for reaching out  🚀' });
+    console.log('[sendmail] Message sent: %s', info.messageId);
+    return response
+      .status(200)
+      .json({ success: 'Your message was sent, thanks for reaching out  🚀' });
+  } catch (error) {
+    console.error('[sendmail] Sending failed: %s', error);
+    return response.status(500).json({ error: config.errorMessage });
+  }
 };
 
 export default handler;
