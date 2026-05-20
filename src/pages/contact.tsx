@@ -34,14 +34,8 @@ const About = (props: {
         </div>
         <div className="sm:table-cell w-full p-12 text-white font-bold mb-9">
           <h1 className="text-3xl mb-2">Contact FLY5</h1>
-          <p className="text-base font-normal mb-4 opacity-80">
-            Ready to elevate your project with professional aerial cinematography? Tell us about your vision and we will get back to you with a custom quote. Whether you need drone footage for a film production, real estate listing, wedding, corporate event, or construction documentation, our team in Charlotte, NC is ready to help bring your project to life from a stunning new perspective.
-          </p>
-          <p className="text-base font-normal mb-4 opacity-80">
-            Fill out the form below with details about your project, timeline, and location. We typically respond within one business day. For urgent inquiries, include your phone number and we will call you directly.
-          </p>
-          <p className="text-base font-normal mb-4 opacity-80">
-            We serve the greater Charlotte metropolitan area and are available for travel to locations across North Carolina, South Carolina, and the wider Southeast region. All of our drone pilots are FAA Part 107 certified and fully insured for commercial operations. We look forward to hearing about your next project and showing you what aerial cinematography can do for your story.
+          <p className="text-base font-normal mb-6 opacity-80">
+            Tell us about your project and we&apos;ll get back to you with a quote.
           </p>
           <ContactForm />
         </div>

@@ -64,24 +64,24 @@ const ContactForm = () => {
         throw Error(response.statusText);
       })
       .catch((error) => {
-        // Server error
         console.error('[sendmail] Error sending mail: ', error);
         setStatus({
           message: config.errorMessage,
           error: true,
         });
+        return null;
       });
 
+    if (!result) return;
+
     if (result.message) {
-      // Success
       setStatus({
         message: result.message,
         error: false,
       });
-    } else {
-      // Likely a validation error
+    } else if (result.error) {
       setStatus({
-        message: result.error || result.error?.message || config.errorMessage,
+        message: result.error,
         error: true,
       });
     }
