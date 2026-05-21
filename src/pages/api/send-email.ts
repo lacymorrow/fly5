@@ -47,7 +47,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!response.ok) {
       const error = await response.json();
       console.error('[send-email]', error);
-      return res.status(500).json({ message: 'Message failed to send.', debug: error });
+      return res.status(500).json({ message: 'Message failed to send.' });
     }
 
     return res.status(200).json({
