@@ -1,87 +1,127 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Project } from '../data/projects';
+import { useInView } from '../hooks/useInView';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 interface FeaturedProjectProps {
   project: Project;
   onClick: () => void;
+  number: number;
+  reverse?: boolean;
 }
 
-const FeaturedProject = ({ project, onClick }: FeaturedProjectProps) => {
+const FeaturedProject = ({
+  project,
+  onClick,
+  number,
+  reverse = false,
+}: FeaturedProjectProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el || project.video === undefined) return undefined;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry) {
-          setIsVisible(entry.isIntersecting);
-        }
-      },
-      { threshold: 0.25 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [project.video]);
+  const { ref: inViewRef, isInView } = useInView(0.2);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    if (isVisible) {
+    if (isInView) {
       video.play().catch(() => {});
     } else {
       video.pause();
     }
-  }, [isVisible]);
+  }, [isInView]);
 
   return (
-    <div ref={sectionRef}>
-      <button
-        type="button"
-        className="relative w-full h-[70vh] overflow-hidden cursor-pointer block group"
+    <div ref={inViewRef} className={`reveal ${isInView ? 'visible' : ''}`}>
+      <div
+        className="relative w-full overflow-hidden cursor-pointer group"
         onClick={onClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick();
+          }
+        }}
+        role="button"
+        tabIndex={0}
         aria-label={`View featured project: ${project.title}`}
       >
-        {project.video !== undefined ? (
-          <video
-            ref={videoRef}
-            muted
-            loop
-            playsInline
-            preload="none"
-            className="absolute inset-0 w-full h-full object-cover"
-            poster={`/assets/images/shots/${project.images[0]}.jpg`}
-          >
-            <source src={`/assets/videos/${project.video}.mp4`} type="video/mp4" />
-          </video>
-        ) : (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(/assets/images/shots/${project.images[0]}.jpg)` }}
-          />
-        )}
+        <div
+          className={`flex flex-col ${
+            reverse ? 'md:flex-row-reverse' : 'md:flex-row'
+          } min-h-[50vh] md:min-h-[70vh]`}
+        >
+          <div className="relative w-full md:w-3/5 h-[40vh] md:h-auto overflow-hidden">
+            {project.video !== undefined ? (
+              <video
+                ref={videoRef}
+                muted
+                loop
+                playsInline
+                preload="none"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                poster={`/assets/images/shots/${project.images[0]}.jpg`}
+              >
+                <source
+                  src={`/assets/videos/${project.video}.mp4`}
+                  type="video/mp4"
+                />
+              </video>
+            ) : (
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                style={{
+                  backgroundImage: `url(/assets/images/shots/${project.images[0]}.jpg)`,
+                }}
+              />
+            )}
+            <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-opacity duration-500" />
+          </div>
 
-        <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition-all duration-500" />
-
-        <div className="relative z-10 flex flex-col items-center justify-center h-full px-8 text-center">
-          <span className="text-xs uppercase tracking-[0.3em] text-gray-400 mb-4">
-            Featured — {project.category.replace(/-/g, ' ')}
-          </span>
-          <h3 className="text-5xl sm:text-7xl font-extrabold text-white mb-4">
-            {project.title}
-          </h3>
-          <p className="text-lg text-gray-300 max-w-xl">
-            {project.description}
-          </p>
-          <span className="mt-6 text-sm uppercase tracking-widest text-gray-400 group-hover:text-white transition">
-            View Project &rarr;
-          </span>
+          <div className="w-full md:w-2/5 bg-black flex items-center p-8 sm:p-12 md:p-16">
+            <div className="max-w-md">
+              <span
+                className="text-7xl sm:text-8xl font-thin text-white text-opacity-10 block leading-none mb-6"
+                aria-hidden="true"
+              >
+                {String(number).padStart(2, '0')}
+              </span>
+              <span className="text-xs uppercase tracking-widest text-gray-500 block mb-4">
+                Featured &mdash; {project.category.replace(/-/g, ' ')}
+              </span>
+              <div
+                className={`h-px bg-white bg-opacity-20 mb-6 line-reveal ${
+                  isInView ? 'visible' : ''
+                }`}
+                style={
+                  reducedMotion ? undefined : { animationDelay: '0.3s' }
+                }
+                aria-hidden="true"
+              />
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                {project.title}
+              </h3>
+              <p className="text-sm sm:text-base text-gray-400 leading-relaxed mb-8">
+                {project.description}
+              </p>
+              <span className="inline-flex items-center gap-2 text-sm uppercase tracking-widest text-gray-500 group-hover:text-white transition-colors duration-300">
+                View Project
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          </div>
         </div>
-      </button>
+      </div>
     </div>
   );
 };
