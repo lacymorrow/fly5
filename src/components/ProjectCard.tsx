@@ -15,9 +15,7 @@ interface ProjectCardProps {
 const ProjectCard = ({ project, onClick, index }: ProjectCardProps) => {
   const { ref: inViewRef, isInView } = useInView(0.1);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const cardRef = useRef<HTMLButtonElement>(null);
   const [hovered, setHovered] = useState(false);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -30,19 +28,8 @@ const ProjectCard = ({ project, onClick, index }: ProjectCardProps) => {
     }
   }, [isInView, project.video]);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (reducedMotion) return;
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: y * -6, y: x * 6 });
-  };
-
   const handleMouseLeave = () => {
     setHovered(false);
-    setTilt({ x: 0, y: 0 });
   };
 
   const primaryImage = project.images[0] ?? 0;
@@ -56,26 +43,16 @@ const ProjectCard = ({ project, onClick, index }: ProjectCardProps) => {
       }}
     >
       <button
-        ref={cardRef}
         type="button"
         className="group relative w-full h-[300px] sm:h-[500px] overflow-hidden cursor-pointer block focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
         onClick={onClick}
         onMouseEnter={() => setHovered(true)}
-        onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         aria-label={`View project: ${project.title}`}
-        style={{
-          transform: reducedMotion
-            ? 'none'
-            : `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transition: hovered
-            ? 'transform 0.1s ease-out'
-            : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-        }}
       >
         <div
           className={`absolute inset-0 transition-transform duration-700 ease-out ${
-            hovered ? 'scale-105' : 'scale-100'
+            !reducedMotion && hovered ? 'scale-105' : 'scale-100'
           }`}
         >
           <Image
