@@ -128,7 +128,7 @@ const Portfolio = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-black min-h-screen overflow-x-hidden">
       <Meta
         title="Portfolio — FLY5 Aerial Cinematography | Charlotte, NC"
         description="View aerial cinematography projects by FLY5. Professional drone footage for film, real estate, events, and commercial productions in Charlotte, NC."
@@ -209,7 +209,7 @@ const Portfolio = () => {
 
       {/* Grid */}
       <main id="portfolio-grid" className="pb-16">
-        <div className="grid grid-cols-12 gap-px sm:gap-1">
+        <div className="grid grid-cols-12 gap-0 sm:gap-1">
           {layoutItems.map((item) => {
             if (item.type === 'featured') {
               return (
@@ -256,11 +256,11 @@ const Portfolio = () => {
           ctaInView ? 'visible' : ''
         }`}
       >
-        <p className="text-2xl sm:text-3xl md:text-4xl text-gray-600 italic mb-10 px-8 max-w-2xl mx-auto font-light leading-relaxed">
+        <p className="text-xl sm:text-3xl md:text-4xl text-gray-600 italic mb-10 px-6 sm:px-8 max-w-2xl mx-auto font-light leading-relaxed">
           &ldquo;Every story looks different from above.&rdquo;
         </p>
         <Link href="/contact/">
-          <a className="inline-block font-bold text-lg sm:text-xl border border-white border-opacity-30 text-white px-10 py-5 uppercase tracking-widest transition-all duration-300 hover:bg-white hover:text-black hover:border-white focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none">
+          <a className="inline-block font-bold text-base sm:text-xl border border-white border-opacity-30 text-white px-8 py-4 sm:px-10 sm:py-5 uppercase tracking-widest transition-all duration-300 hover:bg-white hover:text-black hover:border-white focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none">
             Start Your Project
           </a>
         </Link>

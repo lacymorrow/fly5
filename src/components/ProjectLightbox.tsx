@@ -119,7 +119,7 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
       <button
         type="button"
         onClick={handleClose}
-        className="absolute top-6 right-6 z-50 w-11 h-11 flex items-center justify-center text-white text-opacity-50 hover:text-opacity-100 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none rounded-full"
+        className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 w-11 h-11 flex items-center justify-center text-white text-opacity-50 hover:text-opacity-100 transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none rounded-full bg-black bg-opacity-50 sm:bg-transparent"
         aria-label="Close lightbox"
         autoFocus
       >
@@ -141,7 +141,7 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
             type="button"
             onClick={() => setActiveImage((i) => Math.max(i - 1, 0))}
             disabled={safeIndex === 0}
-            className="absolute left-4 top-1/2 z-50 w-11 h-11 flex items-center justify-center text-white text-opacity-40 hover:text-opacity-100 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none rounded-full disabled:opacity-20 disabled:cursor-default"
+            className="absolute left-2 sm:left-4 top-1/2 z-50 w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-white text-opacity-40 hover:text-opacity-100 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none rounded-full disabled:opacity-20 disabled:cursor-default bg-black bg-opacity-50 sm:bg-transparent"
             aria-label="Previous image"
             style={{ transform: 'translateY(-50%)' }}
           >
@@ -164,7 +164,7 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
               )
             }
             disabled={safeIndex === project.images.length - 1}
-            className="absolute right-4 top-1/2 z-50 w-11 h-11 flex items-center justify-center text-white text-opacity-40 hover:text-opacity-100 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none rounded-full disabled:opacity-20 disabled:cursor-default"
+            className="absolute right-2 sm:right-4 top-1/2 z-50 w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center text-white text-opacity-40 hover:text-opacity-100 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none rounded-full disabled:opacity-20 disabled:cursor-default bg-black bg-opacity-50 sm:bg-transparent"
             aria-label="Next image"
             style={{ transform: 'translateY(-50%)' }}
           >
@@ -183,7 +183,7 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
       )}
 
       <div
-        className="relative z-10 max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto"
+        className="relative z-10 max-w-5xl w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto"
         style={{
           transform: isOpen ? 'translateY(0)' : 'translateY(24px)',
           transition: reducedMotion
@@ -193,7 +193,7 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="relative w-full h-[50vh] sm:h-[65vh] overflow-hidden">
+        <div className="relative w-full h-[40vh] sm:h-[65vh] overflow-hidden">
           {project.video !== undefined && safeIndex === 0 ? (
             <video
               autoPlay
@@ -226,7 +226,7 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
           )}
         </div>
 
-        <div className="py-8 px-2">
+        <div className="py-6 sm:py-8 px-3 sm:px-4">
           <div className="flex items-center gap-3 mb-3">
             <span className="text-xs uppercase tracking-widest text-gray-500">
               {project.category.replace(/-/g, ' ')}
@@ -247,7 +247,7 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
 
         {project.images.length > 1 && (
           <div
-            className="flex gap-2 pb-8 px-2 overflow-x-auto"
+            className="flex gap-2 pb-8 px-3 sm:px-4 overflow-x-auto"
             role="tablist"
             aria-label="Project images"
           >

@@ -10,7 +10,7 @@ interface CategoryFilterProps {
 const CategoryFilter = ({ active, onChange }: CategoryFilterProps) => {
   const navRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const [pill, setPill] = useState({ left: 0, width: 0 });
+  const [pill, setPill] = useState({ left: 0, top: 0, width: 0, height: 0 });
 
   const updatePill = useCallback(() => {
     const btn = buttonRefs.current[active];
@@ -20,7 +20,9 @@ const CategoryFilter = ({ active, onChange }: CategoryFilterProps) => {
       const btnRect = btn.getBoundingClientRect();
       setPill({
         left: btnRect.left - navRect.left,
+        top: btnRect.top - navRect.top,
         width: btnRect.width,
+        height: btnRect.height,
       });
     }
   }, [active]);
@@ -41,13 +43,14 @@ const CategoryFilter = ({ active, onChange }: CategoryFilterProps) => {
         className="relative flex justify-center gap-1 sm:gap-2 py-4 px-4 flex-wrap"
       >
         <div
-          className="absolute top-1/2 h-8 bg-white bg-opacity-10 rounded-full pointer-events-none"
+          className="absolute bg-white bg-opacity-10 rounded-full pointer-events-none"
           style={{
             left: pill.left,
+            top: pill.top,
             width: pill.width,
-            transform: 'translateY(-50%)',
+            height: pill.height,
             transition:
-              'left 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+              'left 0.3s cubic-bezier(0.16, 1, 0.3, 1), top 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
           aria-hidden="true"
         />

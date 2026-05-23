@@ -78,7 +78,7 @@ const FeaturedProject = ({
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-opacity duration-500" />
           </div>
 
-          <div className="w-full md:w-2/5 bg-black flex items-center p-8 sm:p-12 md:p-16">
+          <div className="w-full md:w-2/5 bg-black flex items-center p-6 sm:p-10 md:p-16">
             <div className="max-w-md">
               <span
                 className="text-7xl sm:text-8xl font-thin text-white text-opacity-10 block leading-none mb-6"
