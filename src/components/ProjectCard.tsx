@@ -42,10 +42,17 @@ const ProjectCard = ({ project, onClick, index }: ProjectCardProps) => {
         transitionDelay: reducedMotion ? '0s' : `${(index % 4) * 0.1}s`,
       }}
     >
-      <button
-        type="button"
+      <div
+        role="button"
+        tabIndex={0}
         className="group relative w-full h-[300px] sm:h-[500px] overflow-hidden cursor-pointer block focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
         onClick={onClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick();
+          }
+        }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={handleMouseLeave}
         aria-label={`View project: ${project.title}`}
@@ -131,7 +138,7 @@ const ProjectCard = ({ project, onClick, index }: ProjectCardProps) => {
             </svg>
           </div>
         )}
-      </button>
+      </div>
     </div>
   );
 };
