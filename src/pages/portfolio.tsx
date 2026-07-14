@@ -140,14 +140,12 @@ const Portfolio = () => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
-
       <a
         href="#portfolio-grid"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:p-2 focus:rounded"
       >
         Skip to portfolio
       </a>
-
       {/* Hero */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0 overflow-hidden">
@@ -203,10 +201,8 @@ const Portfolio = () => {
           <div className="scroll-indicator" />
         </div>
       </section>
-
       {/* Filter */}
       <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
-
       {/* Grid */}
       <main id="portfolio-grid" className="pb-16">
         <div className="grid grid-cols-12 gap-0 sm:gap-1">
@@ -248,7 +244,6 @@ const Portfolio = () => {
           </p>
         )}
       </main>
-
       {/* CTA */}
       <section
         ref={ctaRef}
@@ -259,13 +254,14 @@ const Portfolio = () => {
         <p className="text-xl sm:text-3xl md:text-4xl text-gray-600 italic mb-10 px-6 sm:px-8 max-w-2xl mx-auto font-light leading-relaxed">
           &ldquo;Every story looks different from above.&rdquo;
         </p>
-        <Link href="/contact/">
-          <a className="inline-block font-bold text-base sm:text-xl border border-white border-opacity-30 text-white px-8 py-4 sm:px-10 sm:py-5 uppercase tracking-widest transition-all duration-300 hover:bg-white hover:text-black hover:border-white focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none">
+        <Link
+          href="/contact/"
+          className="inline-block font-bold text-base sm:text-xl border border-white border-opacity-30 text-white px-8 py-4 sm:px-10 sm:py-5 uppercase tracking-widest transition-all duration-300 hover:bg-white hover:text-black hover:border-white focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none">
+          
             Start Your Project
-          </a>
+          
         </Link>
       </section>
-
       {/* Footer */}
       <footer className="text-center py-8 text-xs text-gray-600 border-t border-gray-800 border-opacity-50">
         <p>
@@ -276,29 +272,36 @@ const Portfolio = () => {
           aria-label="Footer navigation"
           className="mt-3 flex justify-center gap-6"
         >
-          <Link href="/">
-            <a className="text-gray-600 hover:text-gray-400 transition-colors duration-200">
+          <Link
+            href="/"
+            className="text-gray-600 hover:text-gray-400 transition-colors duration-200">
+            
               Home
-            </a>
+            
           </Link>
-          <Link href="/about/">
-            <a className="text-gray-600 hover:text-gray-400 transition-colors duration-200">
+          <Link
+            href="/about/"
+            className="text-gray-600 hover:text-gray-400 transition-colors duration-200">
+            
               About
-            </a>
+            
           </Link>
-          <Link href="/contact/">
-            <a className="text-gray-600 hover:text-gray-400 transition-colors duration-200">
+          <Link
+            href="/contact/"
+            className="text-gray-600 hover:text-gray-400 transition-colors duration-200">
+            
               Contact
-            </a>
+            
           </Link>
-          <Link href="/privacy/">
-            <a className="text-gray-600 hover:text-gray-400 transition-colors duration-200">
+          <Link
+            href="/privacy/"
+            className="text-gray-600 hover:text-gray-400 transition-colors duration-200">
+            
               Privacy
-            </a>
+            
           </Link>
         </nav>
       </footer>
-
       {/* Lightbox */}
       {lightboxProject && (
         <ProjectLightbox

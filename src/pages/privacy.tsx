@@ -67,8 +67,8 @@ const Privacy = () => (
     <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Contact</h2>
     <p className="mb-4">
       If you have questions about this privacy policy or how we handle your data, please reach out through our{' '}
-      <Link href="/contact/">
-        <a className="text-blue-600 hover:underline">contact form</a>
+      <Link href="/contact/" className="text-blue-600 hover:underline">
+        contact form
       </Link>.
     </p>
   </Main>

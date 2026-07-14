@@ -69,11 +69,9 @@ const Index = () => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
         />
       </Head>
-
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:p-2">
         Skip to main content
       </a>
-
       <main id="main-content" role="main">
         <TextWrapper className="hidden md:block">
           <VideoText
@@ -110,10 +108,12 @@ const Index = () => {
           We specialize in cinematic drone footage for film, real estate, events, and commercial projects across the Charlotte, NC area. From breathtaking aerials to precision close-ups, FLY5 delivers footage that elevates your story.
         </p>
 
-        <Link href="/contact/">
-          <a className="font-bold text-4xl border-4 border-gray-900 transition text-gray-900 hover:text-white hover:bg-gray-900 p-6">
+        <Link
+          href="/contact/"
+          className="font-bold text-4xl border-4 border-gray-900 transition text-gray-900 hover:text-white hover:bg-gray-900 p-6">
+          
             Interested?
-          </a>
+          
         </Link>
 
         <section className="max-w-2xl mx-auto mt-16 px-4 text-left">
@@ -129,21 +129,20 @@ const Index = () => {
           </p>
         </section>
       </main>
-
       <footer className="mt-16 py-8 text-center text-sm text-gray-500">
         <p>&copy; {new Date().getFullYear()} {config.title}. All rights reserved.</p>
         <nav aria-label="Footer navigation" className="mt-2">
-          <Link href="/portfolio/">
-            <a className="text-gray-500 hover:text-gray-900 mx-2">Portfolio</a>
+          <Link href="/portfolio/" className="text-gray-500 hover:text-gray-900 mx-2">
+            Portfolio
           </Link>
-          <Link href="/about/">
-            <a className="text-gray-500 hover:text-gray-900 mx-2">About</a>
+          <Link href="/about/" className="text-gray-500 hover:text-gray-900 mx-2">
+            About
           </Link>
-          <Link href="/contact/">
-            <a className="text-gray-500 hover:text-gray-900 mx-2">Contact</a>
+          <Link href="/contact/" className="text-gray-500 hover:text-gray-900 mx-2">
+            Contact
           </Link>
-          <Link href="/privacy/">
-            <a className="text-gray-500 hover:text-gray-900 mx-2">Privacy Policy</a>
+          <Link href="/privacy/" className="text-gray-500 hover:text-gray-900 mx-2">
+            Privacy Policy
           </Link>
         </nav>
       </footer>

@@ -115,7 +115,6 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
         onClick={handleClose}
         aria-hidden="true"
       />
-
       <button
         type="button"
         onClick={handleClose}
@@ -134,7 +133,6 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
           <path d="M18 6L6 18M6 6l12 12" />
         </svg>
       </button>
-
       {project.images.length > 1 && (
         <>
           <button
@@ -181,7 +179,6 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
           </button>
         </>
       )}
-
       <div
         className="relative z-10 max-w-5xl w-full mx-2 sm:mx-4 max-h-[90vh] overflow-y-auto"
         style={{
@@ -212,8 +209,9 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
               <Image
                 src={`/assets/images/shots/${currentImageId}.jpg`}
                 alt={`${project.title} — shot ${safeIndex + 1}`}
-                layout="fill"
-                objectFit="cover"
+                fill
+                className="object-cover"
+                sizes="100vw"
                 priority
               />
             )
@@ -270,8 +268,9 @@ const ProjectLightbox = ({ project, onClose }: ProjectLightboxProps) => {
                 <Image
                   src={`/assets/images/shots/${imgIdx}.jpg`}
                   alt=""
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  className="object-cover"
+                  sizes="96px"
                 />
               </button>
             ))}

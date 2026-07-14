@@ -65,8 +65,9 @@ const ProjectCard = ({ project, onClick, index }: ProjectCardProps) => {
           <Image
             src={`/assets/images/shots/${primaryImage}.jpg`}
             alt={`${project.title} — aerial cinematography by FLY5`}
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, 50vw"
             priority={index < 2}
           />
         </div>

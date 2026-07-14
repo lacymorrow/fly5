@@ -29,22 +29,22 @@ const Main = (props: MainProps) => (
           <ul className="flex flex-wrap text-xl">
             <li className="mr-6">
               <Link href="/">
-                <a>Home</a>
+                Home
               </Link>
             </li>
             <li className="mr-6">
               <Link href="/portfolio/">
-                <a>Portfolio</a>
+                Portfolio
               </Link>
             </li>
             <li className="mr-6">
               <Link href="/about/">
-                <a>About</a>
+                About
               </Link>
             </li>
             <li className="mr-6">
               <Link href="/contact/">
-                <a>Contact</a>
+                Contact
               </Link>
             </li>
           </ul>
@@ -58,8 +58,8 @@ const Main = (props: MainProps) => (
       <footer className="border-t border-gray-300 text-center py-8 text-sm">
         <p>&copy; {new Date().getFullYear()} {config.title}. All rights reserved.</p>
         <nav aria-label="Footer navigation" className="mt-2">
-          <Link href="/privacy/">
-            <a className="text-gray-600 hover:text-gray-900">Privacy Policy</a>
+          <Link href="/privacy/" className="text-gray-600 hover:text-gray-900">
+            Privacy Policy
           </Link>
         </nav>
       </footer>
