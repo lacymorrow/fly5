@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
-import Link from 'next/link';
+import Link from "next/link";
 
-import config from '../utils/config';
+import config from "../utils/config";
 
 type MainProps = {
   meta: ReactNode;
@@ -13,7 +13,10 @@ const Main = (props: MainProps) => (
   <div className="flex flex-col w-full min-h-screen">
     {props.meta}
 
-    <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:p-2">
+    <a
+      href="#main-content"
+      className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:p-2"
+    >
       Skip to main content
     </a>
 
@@ -28,24 +31,16 @@ const Main = (props: MainProps) => (
         <nav aria-label="Main navigation">
           <ul className="flex flex-wrap text-xl">
             <li className="mr-6">
-              <Link href="/">
-                Home
-              </Link>
+              <Link href="/">Home</Link>
             </li>
             <li className="mr-6">
-              <Link href="/portfolio/">
-                Portfolio
-              </Link>
+              <Link href="/portfolio/">Portfolio</Link>
             </li>
             <li className="mr-6">
-              <Link href="/about/">
-                About
-              </Link>
+              <Link href="/about/">About</Link>
             </li>
             <li className="mr-6">
-              <Link href="/contact/">
-                Contact
-              </Link>
+              <Link href="/contact/">Contact</Link>
             </li>
           </ul>
         </nav>
@@ -56,7 +51,9 @@ const Main = (props: MainProps) => (
       </main>
 
       <footer className="border-t border-gray-300 text-center py-8 text-sm">
-        <p>&copy; {new Date().getFullYear()} {config.title}. All rights reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} {config.title}. All rights reserved.
+        </p>
         <nav aria-label="Footer navigation" className="mt-2">
           <Link href="/privacy/" className="text-gray-600 hover:text-gray-900">
             Privacy Policy
