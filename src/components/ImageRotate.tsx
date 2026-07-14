@@ -66,11 +66,8 @@ const ImageRotate = (props: ImageRotateProps) => {
         src={imageState.image}
         priority={true}
         sizes="50vw"
-        objectFit="cover"
-        height="100%"
-        width="100%"
-        className="w-full h-full absolute transition duration-1000"
-        layout="responsive"
+        fill
+        className="object-cover transition duration-1000"
         onLoad={() => {
           setImageState((prevState) => ({
             ...prevState,
