@@ -71,6 +71,9 @@ const Meta = (props: MetaProps) => {
             ]
             : undefined,
         }}
+        twitter={{
+          cardType: 'summary_large_image',
+        }}
       />
     </>
   );
