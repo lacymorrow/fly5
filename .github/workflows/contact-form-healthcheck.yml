@@ -1,0 +1,57 @@
+name: Contact form health check
+
+# LAC-3573: verify the contact form works every day so it can never silently
+# break again. Two layers:
+#   1. /api/health/contact — confirms the email provider is configured and its
+#      credentials are still valid (no email sent).
+#   2. POST /api/send-email with an invalid body — confirms the serverless
+#      route is deployed and responding (validation-only, no email sent).
+# If either fails the job fails, and GitHub emails the repo owner. Add a Slack
+# webhook secret (SLACK_WEBHOOK_URL) to also get a chat alert.
+
+on:
+  schedule:
+    - cron: '0 13 * * *' # 13:00 UTC daily (~9am ET)
+  workflow_dispatch: {}
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://www.fly5.live
+      HEALTHCHECK_TOKEN: ${{ secrets.HEALTHCHECK_TOKEN }}
+    steps:
+      - name: Config health check (provider + credentials)
+        run: |
+          echo "GET $SITE_URL/api/health/contact"
+          code=$(curl -s -o /tmp/health.json -w "%{http_code}" \
+            -H "x-healthcheck-token: $HEALTHCHECK_TOKEN" \
+            "$SITE_URL/api/health/contact")
+          echo "HTTP $code"; cat /tmp/health.json; echo
+          if [ "$code" != "200" ]; then
+            echo "::error::Contact form health check FAILED (HTTP $code). Email provider may be misconfigured."
+            exit 1
+          fi
+
+      - name: Live route check (validation-only submission, sends no email)
+        run: |
+          echo "POST $SITE_URL/api/send-email (missing name -> 422 expected)"
+          code=$(curl -s -o /tmp/send.json -w "%{http_code}" \
+            -X POST "$SITE_URL/api/send-email" \
+            -H "Content-Type: application/json" \
+            -d '{"email":"healthcheck@fly5.live","message":"automated daily healthcheck — ignore"}')
+          echo "HTTP $code"; cat /tmp/send.json; echo
+          # 422 = route is deployed and reached validation; 503 = provider not configured.
+          if [ "$code" != "422" ]; then
+            echo "::error::Contact form endpoint is unhealthy (HTTP $code, expected 422)."
+            exit 1
+          fi
+
+      - name: Notify Slack on failure
+        if: failure() && env.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -s -X POST "$SLACK_WEBHOOK_URL" \
+            -H 'Content-Type: application/json' \
+            -d '{"text":":rotating_light: fly5.live contact form health check FAILED. See GitHub Actions run '"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"'"}' || true
