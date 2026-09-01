@@ -24,7 +24,7 @@ jobs:
       - name: Config health check (provider + credentials)
         run: |
           echo "GET $SITE_URL/api/health/contact"
-          code=$(curl -s -o /tmp/health.json -w "%{http_code}" \
+          code=$(curl -sL -o /tmp/health.json -w "%{http_code}" \
             -H "x-healthcheck-token: $HEALTHCHECK_TOKEN" \
             "$SITE_URL/api/health/contact")
           echo "HTTP $code"; cat /tmp/health.json; echo
@@ -36,7 +36,7 @@ jobs:
       - name: Live route check (validation-only submission, sends no email)
         run: |
           echo "POST $SITE_URL/api/send-email (missing name -> 422 expected)"
-          code=$(curl -s -o /tmp/send.json -w "%{http_code}" \
+          code=$(curl -sL -o /tmp/send.json -w "%{http_code}" \
             -X POST "$SITE_URL/api/send-email" \
             -H "Content-Type: application/json" \
             -d '{"email":"healthcheck@fly5.live","message":"automated daily healthcheck — ignore"}')
@@ -52,6 +52,6 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          curl -s -X POST "$SLACK_WEBHOOK_URL" \
+          curl -sL -X POST "$SLACK_WEBHOOK_URL" \
             -H 'Content-Type: application/json' \
             -d '{"text":":rotating_light: fly5.live contact form health check FAILED. See GitHub Actions run '"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"'"}' || true
