@@ -120,7 +120,7 @@ const Portfolio = () => {
     name: "FLY5 Aerial Cinematography Portfolio",
     description:
       "Professional aerial drone cinematography projects by FLY5 in Charlotte, NC.",
-    url: `${config.siteUrl}/portfolio`,
+    url: `${config.siteUrl}/portfolio/`,
     provider: {
       "@type": "Organization",
       name: "FLY5",
